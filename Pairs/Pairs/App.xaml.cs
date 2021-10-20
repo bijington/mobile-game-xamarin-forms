@@ -1,6 +1,6 @@
-﻿using System;
+﻿using System.Linq;
+using Pairs.Repositories;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Pairs
 {
@@ -13,8 +13,16 @@ namespace Pairs
             MainPage = new MainPage();
         }
 
-        protected override void OnStart()
+        protected async override void OnStart()
         {
+            IShapeRepository shapeRepository = new ShapeRepository();
+
+            var shapes = await shapeRepository.ListAsync();
+
+            await MainPage.DisplayAlert(
+                $"Loaded {shapes.Count} shapes",
+                shapes.First().Path,
+                "OK");
         }
 
         protected override void OnSleep()
