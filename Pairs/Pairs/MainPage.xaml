@@ -1,15 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Pairs.ViewModels"
              x:Class="Pairs.MainPage"
-             BackgroundColor="{StaticResource Color01}">
+             BackgroundColor="{StaticResource Color01}"
+             x:DataType="viewmodels:MainPageViewModel">
+    <ContentPage.BindingContext>
+        <viewmodels:MainPageViewModel />
+    </ContentPage.BindingContext>
 
     <StackLayout HorizontalOptions="Center"
                  VerticalOptions="CenterAndExpand">
 
-        <Label Text="Coming real soon" />
+        <Label Text="{Binding GuessedCount}" />
 
-        <Label Text="Honestly it really is!" />
+        <Button Text="Play"
+                Command="{Binding PlayCommand}"
+                IsVisible="{Binding ShowPlay}" />
+
+        <Button Text="Guess"
+                Command="{Binding GuessCommand}"
+                IsVisible="{Binding ShowGuess}" />
 
     </StackLayout>
 

@@ -19,9 +19,11 @@
     <None Remove="Repositories\" />
     <None Remove="Models\" />
     <None Remove="Newtonsoft.Json" />
+    <None Remove="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Repositories\" />
     <Folder Include="Models\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 </Project>
