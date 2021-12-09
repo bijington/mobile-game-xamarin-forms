@@ -9,19 +9,46 @@
         <viewmodels:MainPageViewModel />
     </ContentPage.BindingContext>
 
-    <StackLayout HorizontalOptions="Center"
-                 VerticalOptions="CenterAndExpand">
-
-        <Label Text="{Binding GuessedCount}" />
+    <Grid RowDefinitions="80,*">
+        <Label Text="{Binding GuessedCount}"
+               VerticalOptions="End"
+               IsVisible="{Binding ShowGuess}" />
 
         <Button Text="Play"
+                Grid.Row="1"
                 Command="{Binding PlayCommand}"
-                IsVisible="{Binding ShowPlay}" />
+                IsVisible="{Binding ShowPlay}"
+                VerticalOptions="Center" />
 
-        <Button Text="Guess"
-                Command="{Binding GuessCommand}"
-                IsVisible="{Binding ShowGuess}" />
+        <FlexLayout BindableLayout.ItemsSource="{Binding Tiles}"
+                    Direction="Row"
+                    Wrap="Wrap"
+                    JustifyContent="Center"
+                    AlignItems="Center"
+                    AlignContent="Center"
+                    IsVisible="{Binding ShowGuess}"
+                    Grid.RowSpan="2">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="viewmodels:TileViewModel">
+                    <Grid WidthRequest="80"
+                          HeightRequest="80"
+                          Margin="5">
+                        <Frame IsClippedToBounds="True"
+                               Padding="0"
+                               HasShadow="False"
+                               CornerRadius="40"
+                               BackgroundColor="{StaticResource Color02}">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Path=GuessCommand, Source={RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}}}" />
+                            </Frame.GestureRecognizers>
 
-    </StackLayout>
+                            <Label Text="{Binding Path}"
+                                   TextColor="{StaticResource Color01}"/>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </FlexLayout>
+    </Grid>
 
 </ContentPage>

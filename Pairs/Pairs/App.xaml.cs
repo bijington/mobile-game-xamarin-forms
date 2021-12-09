@@ -13,18 +13,6 @@ namespace Pairs
             MainPage = new MainPage();
         }
 
-        protected async override void OnStart()
-        {
-            IShapeRepository shapeRepository = new ShapeRepository();
-
-            var shapes = await shapeRepository.ListAsync();
-
-            await MainPage.DisplayAlert(
-                $"Loaded {shapes.Count} shapes",
-                shapes.First().Path,
-                "OK");
-        }
-
         protected override void OnSleep()
         {
         }
