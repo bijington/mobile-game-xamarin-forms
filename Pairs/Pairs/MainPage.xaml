@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:Pairs.ViewModels"
+             xmlns:converters="clr-namespace:Pairs.Converters"
              x:Class="Pairs.MainPage"
              BackgroundColor="{StaticResource Color01}"
              x:DataType="viewmodels:MainPageViewModel">
@@ -9,16 +10,27 @@
         <viewmodels:MainPageViewModel />
     </ContentPage.BindingContext>
 
+    <ContentPage.Resources>
+        <converters:StringToPathGeometryConverter x:Key="StringToPathGeometryConverter" />
+    </ContentPage.Resources>
+
     <Grid RowDefinitions="80,*">
         <Label Text="{Binding GuessedCount}"
                VerticalOptions="End"
                IsVisible="{Binding ShowGuess}" />
 
-        <Button Text="Play"
-                Grid.Row="1"
-                Command="{Binding PlayCommand}"
-                IsVisible="{Binding ShowPlay}"
-                VerticalOptions="Center" />
+        <Polygon Points="0,0 40,20 0,40"
+                 Fill="#2A9D8F"
+                 WidthRequest="40"
+                 Grid.Row="1"
+                 HeightRequest="40"
+                 HorizontalOptions="Center"
+                 IsVisible="{Binding ShowPlay}"
+                 VerticalOptions="Center">
+            <Polygon.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding PlayCommand}" />
+            </Polygon.GestureRecognizers>
+        </Polygon>
 
         <FlexLayout BindableLayout.ItemsSource="{Binding Tiles}"
                     Direction="Row"
@@ -42,8 +54,13 @@
                                 <TapGestureRecognizer Command="{Binding Path=GuessCommand, Source={RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}}}" />
                             </Frame.GestureRecognizers>
 
-                            <Label Text="{Binding Path}"
-                                   TextColor="{StaticResource Color01}"/>
+                            <Path Fill="#264653"
+                                  Data="{Binding Path, Converter={StaticResource StringToPathGeometryConverter}}"
+                                  HorizontalOptions="Center"
+                                  VerticalOptions="Center"
+                                  IsVisible="False"
+                                  WidthRequest="50"
+                                  HeightRequest="50" />
                         </Frame>
                     </Grid>
                 </DataTemplate>
