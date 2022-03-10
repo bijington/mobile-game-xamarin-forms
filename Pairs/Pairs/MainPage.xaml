@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:Pairs.ViewModels"
              xmlns:converters="clr-namespace:Pairs.Converters"
+             xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
              x:Class="Pairs.MainPage"
              BackgroundColor="{StaticResource Color01}"
              x:DataType="viewmodels:MainPageViewModel">
@@ -15,6 +16,12 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="80,*">
+        <lottie:AnimationView Animation="background.json"
+                              Grid.RowSpan="2"
+                              Opacity="0.5"
+                              AnimationSource="AssetOrBundle"
+                              RepeatMode="Infinite" />
+
         <Label Text="{Binding GuessedCount}"
                VerticalOptions="End"
                IsVisible="{Binding ShowGuess}" />
